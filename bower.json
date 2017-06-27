@@ -1,0 +1,20 @@
+{
+    "name": "ngMapUtils",
+    "description": "Web libs for ngMapUtils",
+    "main": "",
+    "authors": ["Paulo Mellin Gimenes"],
+    "license": "GNU",
+    "homepage": "",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "openlayers": "https://github.com/openlayers/openlayers/releases/download/v4.2.0/v4.2.0-dist.zip",
+        "angular": "1.6.4",
+        "javascript-detect-element-resize": "detect-element-resize#^0.5.3"
+    }
+}

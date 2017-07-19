@@ -1,4 +1,4 @@
-angular.module('ngMapUtils')
+angular.module('ngMapUtils', [])
     .factory('mapUtils', [function() {
         var mapUtils = {
             format: 'image/png',
@@ -8,6 +8,13 @@ angular.module('ngMapUtils')
                 units: 'degrees',
                 axisOrientation: 'neu'
             }),
+            setProjection: function(code, units, axisOrientation) {
+                this.projection = new ol.proj.Projection({
+                    'code': code,
+                    'units': units,
+                    'axisOrientation': axisOrientation
+                })
+            },
             createMap: function(element, layers) {
                 var mousePositionControl = new ol.control.MousePosition({
                     className: 'custom-mouse-position',
@@ -15,8 +22,8 @@ angular.module('ngMapUtils')
                     coordinateFormat: ol.coordinate.createStringXY(5),
                     undefinedHTML: '&nbsp;'
                 });
-                var baseMapa = new ol.layer.Group({
-                    'title': 'Mapas base',
+                var baseMap = new ol.layer.Group({
+                    'title': 'Base maps',
                     layers: [
                         new ol.layer.Tile({
                             title: 'None',
@@ -40,7 +47,7 @@ angular.module('ngMapUtils')
                     ]
                 });
                 var layerSwitcher = new ol.control.LayerSwitcher();
-                var baseLayer = [baseMapa];
+                var baseLayer = [baseMap];
                 if (layers) {
                     baseLayer = baseLayer.concat(layers);
                 }
@@ -108,7 +115,7 @@ angular.module('ngMapUtils')
                     spinner.stop(target);
                 });
             },
-            filtroCQL: function(layer, filter) {
+            cqlFilter: function(layer, filter) {
                 var filterParams = {
                     'FILTER': filter,
                     'CQL_FILTER': null,

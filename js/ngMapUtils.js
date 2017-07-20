@@ -125,4 +125,29 @@ angular.module('ngMapUtils', [])
             }
         };
         return mapUtils;
-    }]);
+    }])
+    .directive('map', function() {
+        var directive = {};
+        directive.scope = {
+            width: '@',
+            height: '@',
+            resize: '@',
+            model: '='
+        };
+        directive.template = '<div id="map"></div>' +
+            '<div id="wrapper">' +
+            '<div id="location"></div>' +
+            '<div id="scale"></div>' +
+            '</div>';
+        directive.link = function(scope, el, attrs, ctrl) {};
+        directive.controller = ['$scope', 'mapUtils', function($scope, mapUtils) {
+            angular.element(document.querySelector("#map")).css('width', $scope.width);
+            angular.element(document.querySelector("#map")).css('height', $scope.height);
+            $scope.model = mapUtils.createMap("map");
+            mapUtils.fitMap($scope.model);
+            if ($scope.resize) {
+                mapUtils.resizeMap("map", $scope.model);
+            }
+        }];
+        return directive;
+    });

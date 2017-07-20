@@ -13,4 +13,24 @@ The ngMapUtils project has the following dependencies: openlayers(v4.2.0), ol3-l
 <script src="../bower_components/javascript-detect-element-resize/detect-element-resize.js" type="application/javascript"></script>
 <script src="../bower_components/spin.js/spin.min.js" type="application/javascript"></script>
  ```
- 
+# Basic Usage
+First off all, you need to insert 'ngMapUtils' module into your app as the example below:
+
+```javascript
+var app = angular.module('myApp', ['ngMapUtils']);
+```
+
+After this you can use the <map> directive into your html file:
+
+```html
+<map width="100%" heigth="100%" model="map" resize="true" />
+```
+If you use frameworks like bootstrap it’s reasonable to set the resize attribute to ‘true’.
+Don't forget to initialize the 'model' attribute in your controller:
+
+```javascript
+app.controller('myController', ['$scope', function($scope) {
+    $scope.map = {}
+}]);
+```
+Please check the examples/example01.html file to a better understanding

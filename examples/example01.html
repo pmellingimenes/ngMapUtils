@@ -12,23 +12,16 @@
     <script src="../js/ngMapUtils.js" type="application/javascript"></script>
     <script>
         var app = angular.module('myApp', ['ngMapUtils']);
-        app.controller('myController', ['$scope', 'mapUtils', function($scope, mapUtils) {
-            var map = mapUtils.createMap("map");
-            mapUtils.fitMap(map);
-            mapUtils.scaleView(map);
+        app.controller('myController', ['$scope', function($scope) {
+            $scope.map = {}
         }]);
     </script>
 </head>
 
 <body ng-app="myApp">
     <div ng-controller="myController">
-        <div id="map" style="width: 1000px;height: 500px;"></div>
-        <div id="wrapper">
-            <div id="location"></div>
-            <div id="scale"></div>
-        </div>
+        <map width="100%" heigth="100%" model="map" resize="true" />
     </div>
 </body>
-
 
 </html>

@@ -62,6 +62,20 @@ angular.module('ngMapUtils', [])
                     })
                 });
             },
+            createLayer: function(url, layer) {
+                return new ol.layer.Image({
+                    source: new ol.source.ImageWMS({
+                        ratio: 1,
+                        url: url,
+                        params: {
+                            'FORMAT': this.format,
+                            'VERSION': '1.1.1',
+                            STYLES: '',
+                            LAYERS: layer,
+                        }
+                    })
+                })
+            },
             createOverlay: function(container) {
                 return new ol.Overlay( /** @type {olx.OverlayOptions} */ ({
                     element: container,
@@ -132,18 +146,29 @@ angular.module('ngMapUtils', [])
             width: '@',
             height: '@',
             resize: '@',
-            model: '='
+            addLayer: '&',
+            model: '=',
+            addLayers: '='
         };
         directive.template = '<div id="map"></div>' +
-            '<div id="wrapper">' +
-            '<div id="location"></div>' +
-            '<div id="scale"></div>' +
-            '</div>';
+            '<div id="wrapper"><div id="location"></div><div id="scale"></div></div>';
         directive.link = function(scope, el, attrs, ctrl) {};
         directive.controller = ['$scope', 'mapUtils', function($scope, mapUtils) {
             angular.element(document.querySelector("#map")).css('width', $scope.width);
             angular.element(document.querySelector("#map")).css('height', $scope.height);
-            $scope.model = mapUtils.createMap("map");
+
+
+            if ($scope.addLayers) {
+                var n = $scope.addLayers.length;
+                var layers = [];
+                for (i = 0; i < n; i++) {
+                    var layer = mapUtils.createLayer($scope.addLayers[i].url, $scope.addLayers[i].layer);
+                    layers.push(layer);
+                }
+                $scope.model = mapUtils.createMap("map", layers);
+            } else {
+                $scope.model = mapUtils.createMap("map");
+            }
             mapUtils.fitMap($scope.model);
             if ($scope.resize) {
                 mapUtils.resizeMap("map", $scope.model);

@@ -23,14 +23,26 @@ var app = angular.module('myApp', ['ngMapUtils']);
 After this you can use the <map> directive into your html file:
 
 ```html
-<map width="100%" heigth="100%" model="map" resize="true" />
+<map width="100%" heigth="100%" model="map" resize="true"></map>
 ```
 If you use frameworks like bootstrap it’s reasonable to set the resize attribute to ‘true’.
-Don't forget to initialize the 'model' attribute in your controller:
+Please check the examples/example01.html file to a better understanding
 
+# Loading map with layers
+To load the map with the layers, you have to first define the attributes at the page controller: 
 ```javascript
 app.controller('myController', ['$scope', function($scope) {
-    $scope.map = {}
-}]);
+            $scope.layers = [{
+                url: 'http://siscom.ibama.gov.br:80/geoserver/csr/wms',
+                layer: 'csr:adm_edif_pub_civil_p'
+            }, {
+                url: 'http://siscom.ibama.gov.br:80/geoserver/csr/wms',
+                layer: 'csr:eco_plataforma_ppp'
+            }];
+        }]);
 ```
-Please check the examples/example01.html file to a better understanding
+Then you define your <map> directive with the attribute 'add-layers' equals your $scope.layers:
+```html
+<map model="map" add-layers="layers" width="100%" height="100%"></map>
+```
+Check the examples/example02.html file to a better understanding.

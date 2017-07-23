@@ -31,13 +31,17 @@ Please check the examples/example01.html file to a better understanding
 # Loading map with layers
 To load the map with the layers, you have to first define the attributes at the page controller: 
 ```javascript
-app.controller('myController', ['$scope', function($scope) {
+      app.controller('myController', ['$scope', function($scope) {
             $scope.layers = [{
+                /*WMS URL*/
                 url: 'http://siscom.ibama.gov.br:80/geoserver/csr/wms',
+                /*Layer name*/
                 layer: 'csr:adm_edif_pub_civil_p'
             }, {
                 url: 'http://siscom.ibama.gov.br:80/geoserver/csr/wms',
-                layer: 'csr:eco_plataforma_ppp'
+                layer: 'csr:eco_plataforma_ppp',
+                /*Adding a spin signal while the layer is loading*/
+                loadingSignal: true
             }];
         }]);
 ```

@@ -156,13 +156,14 @@ angular.module('ngMapUtils', [])
         directive.controller = ['$scope', 'mapUtils', function($scope, mapUtils) {
             angular.element(document.querySelector("#map")).css('width', $scope.width);
             angular.element(document.querySelector("#map")).css('height', $scope.height);
-
-
             if ($scope.addLayers) {
                 var n = $scope.addLayers.length;
                 var layers = [];
                 for (i = 0; i < n; i++) {
                     var layer = mapUtils.createLayer($scope.addLayers[i].url, $scope.addLayers[i].layer);
+                    if ($scope.addLayers[i].loadingSignal) {
+                        mapUtils.addLoading(layer, 'map');
+                    }
                     layers.push(layer);
                 }
                 $scope.model = mapUtils.createMap("map", layers);

@@ -62,19 +62,21 @@ angular.module('ngMapUtils', [])
                     })
                 });
             },
-            createLayer: function(url, layer) {
-                return new ol.layer.Image({
-                    source: new ol.source.ImageWMS({
-                        ratio: 1,
-                        url: url,
-                        params: {
-                            'FORMAT': this.format,
-                            'VERSION': '1.1.1',
-                            STYLES: '',
-                            LAYERS: layer,
-                        }
+            createLayer: function(type, url, layer) {
+                if (type == 'wms') {
+                    return new ol.layer.Image({
+                        source: new ol.source.ImageWMS({
+                            ratio: 1,
+                            url: url,
+                            params: {
+                                'FORMAT': this.format,
+                                'VERSION': '1.1.1',
+                                STYLES: '',
+                                LAYERS: layer,
+                            }
+                        })
                     })
-                })
+                }
             },
             createOverlay: function(container) {
                 return new ol.Overlay( /** @type {olx.OverlayOptions} */ ({
@@ -160,7 +162,7 @@ angular.module('ngMapUtils', [])
                 var n = $scope.addLayers.length;
                 var layers = [];
                 for (i = 0; i < n; i++) {
-                    var layer = mapUtils.createLayer($scope.addLayers[i].url, $scope.addLayers[i].layer);
+                    var layer = mapUtils.createLayer($scope.addLayers[i].type, $scope.addLayers[i].url, $scope.addLayers[i].layer);
                     if ($scope.addLayers[i].loadingSignal) {
                         mapUtils.addLoading(layer, 'map');
                     }
